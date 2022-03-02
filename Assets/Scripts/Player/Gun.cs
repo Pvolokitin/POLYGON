@@ -7,22 +7,22 @@ public class Gun : MonoBehaviour
     public GameObject wheel;
     private GameManager gameManager;
 
-    // Статическая позиция башни
+    // Static Gun position 
     [SerializeField] private Vector3 _staticPosition = new Vector3(-0.2f, -1f, 0);
-    // Скорость поворота башни
+    // Speed rotate of Gun
     [SerializeField] private float _speedRotation = 0;
-    // Пуля
+    // Bullet
     [SerializeField] private GameObject prefabBullet;
-    // Дуло
+    // Turret
     [SerializeField] private GameObject turret;
 
-    // Положение прицела
+    // crosshair position
     [SerializeField] private Transform crosshair;
 
-    // Эффект выстрела
+    // particle of shot
     [SerializeField] private ParticleSystem turretParticle;
 
-    // Период между выстрелами
+    // period between shots
     [SerializeField] float _attackPeriod;
                      private float _timer;
 
@@ -31,15 +31,15 @@ public class Gun : MonoBehaviour
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        Vector3 direction = crosshair.transform.position - transform.position; // Находим координаты курсора для поворота
-        Quaternion rotation = Quaternion.LookRotation(direction);   // заставляем башне смотреть в сторону курсора
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, _speedRotation * Time.deltaTime); // скорость поворота за курсором
-        transform.position = wheel.transform.position + _staticPosition;    // двигаемся вместе с колесом
+        Vector3 direction = crosshair.transform.position - transform.position; // find crosshair position
+        Quaternion rotation = Quaternion.LookRotation(direction);   // rotate Gun into crosshair
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, _speedRotation * Time.deltaTime); // The speed of rotation of the tower towards the sight
+        transform.position = wheel.transform.position + _staticPosition;    // moving with the wheel
 
-        // Выстрел с паузой (пауза настраивается в Инспекторе)
+        // Shot with period (period setting in Inspector)
         _timer += Time.deltaTime;
         if (Input.GetMouseButtonDown(0) && _timer > _attackPeriod)
         {
@@ -52,7 +52,7 @@ public class Gun : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("target"))  // Если задели врага = смерть
+        if (collision.gameObject.CompareTag("target"))  // if hit the enemy, - died
         {
             Destroy(GameObject.Find("wheel"));
             Destroy(this.gameObject);
@@ -60,10 +60,10 @@ public class Gun : MonoBehaviour
         }
     }
 
-    void ShootThem()    // Выстрел префаба Пуля
+    void ShootThem()    // create prefab Bullet
     {
-        Vector3 prefPos = new Vector3(turret.transform.position.x, turret.transform.position.y, turret.transform.position.z);   // получаем координаты дула по XYZ
-        Instantiate(prefabBullet, prefPos, transform.rotation); // используем эти координаты для местополжения выстрела из пушки
-        
+        Vector3 prefPos = new Vector3(turret.transform.position.x, turret.transform.position.y, turret.transform.position.z);   // find turret position on XYZ
+        Instantiate(prefabBullet, prefPos, transform.rotation); // use these coordinates for the location of the Turret shot
+
     }
 }

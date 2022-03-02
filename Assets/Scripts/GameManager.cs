@@ -8,34 +8,34 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     
-    public GameObject titleScreen;          //  Стартовый экран с кнопкой Старт
-    public GameObject gameOverScreen;       //  Конец игры с кнопкой Рестарт
+    public GameObject titleScreen;          // with button Play
+    public GameObject gameOverScreen;       //  with button Restart
 
-    public TextMeshProUGUI scoreText;       // Счет
+    public TextMeshProUGUI scoreText;       // Score text (canvas)
 
-    public Button _play;        //  Кнопка Старт
-    public Button _restart;     //  Кнопка Рестарт
+    public Button _play;       
+    public Button _restart;     
     
 
-    public bool isGameActive;   // Проверка активна ли игра, она же и конец игры
-    public bool isGameStart;    // Внутренняя проверка старта игры после нажатия кнопки Start
-    private int score;      // переменная со значения в Score
+    public bool isGameActive; 
+    public bool isGameStart;    
+    private int score;      // Score
 
     void Start()
     {
-        isGameStart = true;     // Старт игры получает, что игра стартанула
+        isGameStart = true; 
     }
 
     void Update()
     {
-        if (isGameActive == false && isGameStart == false)      // Если игра не стартанула и игра проиграна
+        if (isGameActive == false && isGameStart == false)  
         {
-            GameOver();     // Включаем функцию Конец Игры
+            GameOver();     // if game end => show GameOverScreen
         }
         
     }
 
-    public void UpdateScore(int scoreToAdd)     // Обновляем счет
+    public void UpdateScore(int scoreToAdd)     // Update Score
     {
         score += scoreToAdd;
         scoreText.text = "Score: " + score;
@@ -43,21 +43,21 @@ public class GameManager : MonoBehaviour
 
 
 
-    public void StartGame()     // если жмем на кнопку Играть
+    public void StartGame()     // if press button "Play"
     {
-        titleScreen.gameObject.SetActive(false);    // Выключаем главный экран Старт
-        scoreText.gameObject.SetActive(true);       // Включаем счет
-        isGameActive = true;    // Игра активна
-        isGameStart = false;    // Игра начата нет
+        titleScreen.gameObject.SetActive(false);    // switch off titleScreen
+        scoreText.gameObject.SetActive(true);       // switch on scoreText
+        isGameActive = true;    
+        isGameStart = false; 
     }
 
-    public void GameOver()  // Останавливаем игру по проигрышу
+    public void GameOver()  // if the Player is destroyed
     {
-        gameOverScreen.gameObject.SetActive(true);  // Активируем окно с канвасом Игра Окончена (кнопка Рестарт)
+        gameOverScreen.gameObject.SetActive(true);  // switch on gameOverScreen with button "Restart"
     }
 
-    public void RestartGame()   // если жмем на кнопку Рестарт
+    public void RestartGame()   // if press button "Restart"
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Перезапускается текущая сцена
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Restart this scene
     }
 }

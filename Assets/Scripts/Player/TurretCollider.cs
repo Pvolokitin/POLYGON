@@ -6,13 +6,13 @@ public class TurretCollider: MonoBehaviour
 {
     private GameManager gameManager;
 
-    // коллайдер на пушку
+    // Turret Collider
 
     private void Start()
     {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
-    private void OnCollisionEnter(Collision collision)      // ≈сли враг задел пушку = смерть
+    private void OnCollisionEnter(Collision collision)      // If the enemy hit the Turret, - died
     {
         if (collision.gameObject.CompareTag("target"))
         {

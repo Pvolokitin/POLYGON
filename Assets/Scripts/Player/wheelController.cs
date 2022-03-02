@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class wheelController : MonoBehaviour
 {
-    private float speed = 45.0f;            // —корость шара
-    private float forceForSlide = 10.0f;    // сила рывка
+    private float speed = 45.0f;            // speed ball
+    private float forceForSlide = 10.0f;    // push force
 
     private GameManager gameManager;
     private Rigidbody wheelRb;
@@ -18,7 +18,7 @@ public class wheelController : MonoBehaviour
     }
 
  
-    void Update()       // ”правление шаром
+    void Update()       // ball controll
     {
         float VerticalInput = Input.GetAxis("Vertical");
         float HorizontalInput = Input.GetAxis("Horizontal");
@@ -30,7 +30,7 @@ public class wheelController : MonoBehaviour
         Debug.Log(speed);
     }
 
-    void DodgeWheel()
+    void DodgeWheel() // Dash in the direction of the ball 
     {
         if (Input.GetKey(KeyCode.D))
         {
@@ -60,9 +60,9 @@ public class wheelController : MonoBehaviour
                 wheelRb.AddForce(-Vector3.forward * forceForSlide, ForceMode.Impulse);
             }
         }
-    } // ƒелает рывок в сторону направлени€ шара
+    } 
 
-    private void OnCollisionEnter(Collision collision)  // если ударились об врага, смерть!
+    private void OnCollisionEnter(Collision collision)  // If you hit the enemy, - died
     {
         if (collision.gameObject.CompareTag("target"))
         {

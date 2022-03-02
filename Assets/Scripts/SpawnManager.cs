@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    // Префаб врага
+    // Enemy Prefab (target)
     [SerializeField] private GameObject prefabEnemy;
-    
-    // Ограничения появления врага на поле
+
+    // Field limit values
     private float minBord = 15, maxBord = 32;
 
-    // Количество врагов
+    // Enemy Count
     [SerializeField] private int enemyCount;
-    // Количество волн
+    // Wave Count
     [SerializeField] private int waveCount = 1;
-    // Значения для счета
+
+    // for score
     public int _waveNumber = 0;
 
     private GameManager gameManager;
@@ -27,24 +28,24 @@ public class SpawnManager : MonoBehaviour
    
     void Update()
     {
-        enemyCount = FindObjectsOfType<Enemy>().Length; // Находим количество врагов на поле
-        if(enemyCount == 0)     // Если количество врагов 0
+        enemyCount = FindObjectsOfType<Enemy>().Length; // find length enemy count in game
+        if(enemyCount == 0)
         {
-            gameManager.UpdateScore(++_waveNumber); // Увеличиваем счет
-            waveCount++;                    //  увеличиваем количество врагов для след волны
-            SpawnEnemyWave(waveCount);      //  передаем количество врагов для создания волны
+            gameManager.UpdateScore(++_waveNumber); // update score
+            waveCount++;                    //  Increasing the number of enemies for the next wave
+            SpawnEnemyWave(waveCount);      //  pass the number of enemies to create a wave
         }
     }
 
-    void SpawnEnemyWave(int enemyToSpawn)   // Создание волны (waveCount передается здесь)
+    void SpawnEnemyWave(int enemyToSpawn)   // wave Create (waveCount)
     {
-        for(int i = 0; i < enemyToSpawn; i++)       // Создаем врага от количества врагов переданных по generatePosition
+        for(int i = 0; i < enemyToSpawn; i++)       // create enemy with generatePosition position
         {
             Instantiate(prefabEnemy, generatePosition(), prefabEnemy.transform.rotation);
         }
     }
 
-    private Vector3 generatePosition()      // Рандомное появления врагов по полю
+    private Vector3 generatePosition()      // Enemy spawn random on playground
     {
         float PosX = Random.Range(-minBord, maxBord);
         float PosZ = Random.Range(-minBord, maxBord);
